@@ -64,10 +64,10 @@ def build_mask_model(model, args):
     return mask_model, mask_inputs
 
 def build(args):
-    with tf.device("/cpu:0"):
-        cpu_vgg = model_vgg.build(args)
-        cpu_model = extract_layers(cpu_vgg, args["layers"])
-        cpu_mask_model, cpu_mask_inputs = build_mask_model(cpu_model, args)
+    # with tf.device("/cpu:0"):
+    cpu_vgg = model_vgg.build(args)
+    cpu_model = extract_layers(cpu_vgg, args["layers"])
+    cpu_mask_model, cpu_mask_inputs = build_mask_model(cpu_model, args)
 
     vgg = model_vgg.build(args)
     model = extract_layers(vgg, args["layers"])
