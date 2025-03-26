@@ -87,14 +87,14 @@ class Netty:
         print("Render finished")
         return out
 
-    def render(self, iters=100):
+    def render(self, iters=100, scale=1.0):
         self.args["iters"] = iters
         self.build()
-        self.get_targets()
+        self.get_targets(scale)
         return self._render()
         
 
-    def get_targets(self):
+    def get_targets(self, scale=1.0):
         args = self.args["modules"]
         tgs = []
         for a in args:
@@ -106,6 +106,7 @@ class Netty:
             elif a["type"] == "style":
                 target = a["module"].predict([a["target"], *a["masks"]])
                 if not type(target) == list: target = [target]
+                target = [t*scale for t in target]
                 t = a["x_mask"] + target
                 tgs.append(t)
             elif a["type"] == "mrf":
